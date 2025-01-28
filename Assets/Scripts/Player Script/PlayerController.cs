@@ -42,9 +42,8 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Jump", true);    
         }
         
-        if (!isHealing) // El jugador no puede realizar estas acciones mientras se cura
+        if (!isHealing) 
         {
-            FlipCharacter();
             Attack();
             Heal();
         }
@@ -59,7 +58,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.velocity = Vector2.zero; // Detén al jugador por completo
+            rb.velocity = Vector2.zero; 
         }
     }
 
@@ -72,10 +71,12 @@ public class PlayerController : MonoBehaviour
         if(rb.velocity.x != 0)
         {
             anim.SetBool("Walk", true);
+            FlipCharacter();
         }
         else
         {
             anim.SetBool("Walk", false);
+            FlipCharacter();
         }
     }
 
