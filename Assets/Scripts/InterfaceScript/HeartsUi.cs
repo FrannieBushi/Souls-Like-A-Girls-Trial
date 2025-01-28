@@ -10,12 +10,14 @@ public class HeartsUi : MonoBehaviour
     public GameObject heartPrefab;
     public PlayerHealth playerHealth;
 
-    // Sprites para los estados de los corazones
     public Sprite fullHeart;
     public Sprite threeQuarterHeart;
     public Sprite halfHeart;
     public Sprite quarterHeart;
     public Sprite emptyHeart;
+
+    public int heartsPerRow = 6; 
+    public GameObject rowPrefab; 
 
     private void Awake()
     {
@@ -62,12 +64,23 @@ public class HeartsUi : MonoBehaviour
 
     private void CreateHearts(float maxHealth)
     {
-        int numberOfHearts = Mathf.CeilToInt(maxHealth); // Redondeamos hacia arriba para cubrir toda la salud
-
-        for (int i = 0; i < numberOfHearts; i++)
+        int numberOfHearts = Mathf.CeilToInt(maxHealth); 
+        int currentHeart = 0;
+ 
+        while (currentHeart < numberOfHearts)
         {
-            GameObject heart = Instantiate(heartPrefab, transform);
-            heartsList.Add(heart.GetComponent<Image>());
+            
+            GameObject row = Instantiate(rowPrefab, transform);
+            row.name = "Row" + (transform.childCount); 
+
+            for (int i = 0; i < heartsPerRow; i++)
+            {
+                if (currentHeart >= numberOfHearts) break;
+
+                GameObject heart = Instantiate(heartPrefab, row.transform);
+                heartsList.Add(heart.GetComponent<Image>());
+                currentHeart++;
+            }
         }
     }
 }

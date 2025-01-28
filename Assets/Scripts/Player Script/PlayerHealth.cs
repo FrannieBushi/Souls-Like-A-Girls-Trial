@@ -20,17 +20,19 @@ public class PlayerHealth : MonoBehaviour
     public float knockbackForceX, knockbackForceY;
     Rigidbody2D rb;
 
-    public UnityEvent<float> healthChange = new UnityEvent<float>(); // Initialize the event
+    public UnityEvent<float> healthChange = new UnityEvent<float>(); 
+    public UnityEvent<int> potionChange = new UnityEvent<int>(); 
 
     void Start()
     {
         health = maxHealth;
         potions = maxPotions;
         potionsPower = 1;
-        material = GetComponent<Blink>(); 
-        sprite = GetComponent<SpriteRenderer>(); 
-        rb = GetComponent<Rigidbody2D>(); 
+        material = GetComponent<Blink>();
+        sprite = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
         healthChange.Invoke(health);
+        potionChange.Invoke(potions); 
     }
 
     void Update()
@@ -54,7 +56,26 @@ public class PlayerHealth : MonoBehaviour
             health = auxHealth;
         }
 
-        healthChange.Invoke(health); // Notify health change
+        healthChange.Invoke(health); 
+    }
+
+    public void UsePotion()
+    {
+        if (potions > 0 && health < maxHealth) 
+        {
+            HealLife(maxHealth * potionsPower); 
+            potions--; 
+            potionChange.Invoke(potions); 
+        }
+    }
+
+    public void restorePotion(int amount)
+    {
+        if (potions < maxPotions)
+        {
+            potions = Mathf.Clamp(potions + amount, 0, maxPotions); 
+            potionChange.Invoke(potions); 
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -66,14 +87,14 @@ public class PlayerHealth : MonoBehaviour
 
             if (collision.transform.position.x > transform.position.x)
             {
-                rb.AddForce(new Vector2(knockbackForceX, knockbackForceY), ForceMode2D.Force); 
+                rb.AddForce(new Vector2(knockbackForceX, knockbackForceY), ForceMode2D.Force);
             }
             else
             {
-                rb.AddForce(new Vector2(-knockbackForceX, knockbackForceY), ForceMode2D.Force); 
+                rb.AddForce(new Vector2(-knockbackForceX, knockbackForceY), ForceMode2D.Force);
             }
 
-            healthChange.Invoke(health); // Notify health change
+            healthChange.Invoke(health); 
 
             if (health <= 0)
             {

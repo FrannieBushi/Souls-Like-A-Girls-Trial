@@ -1476,7 +1476,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1667,7 +1667,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1860,8 +1860,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec02def4beac0134fade7e3e85d68f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
-  maxHealth: 3
+  health: 12
+  maxHealth: 12
   potions: 0
   maxPotions: 1
   potionsPower: 0
@@ -1869,6 +1869,9 @@ MonoBehaviour:
   knockbackForceX: 200
   knockbackForceY: 100
   healthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  potionChange:
     m_PersistentCalls:
       m_Calls: []
 --- !u!70 &306722181
@@ -1985,7 +1988,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2117,8 +2120,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -160.2, y: 182.62}
-  m_SizeDelta: {x: 213.82, y: 76.57}
+  m_AnchoredPosition: {x: -133.55, y: 156.4}
+  m_SizeDelta: {x: 267.11, y: 77.52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &366201266
 MonoBehaviour:
@@ -2218,7 +2221,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2302,7 +2305,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2913,7 +2916,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3182,8 +3185,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 950280196}
-  - component: {fileID: 950280198}
   - component: {fileID: 950280197}
+  - component: {fileID: 950280199}
   m_Layer: 5
   m_Name: HeartContainer
   m_TagString: Untagged
@@ -3209,7 +3212,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 213.82, y: 38.285}
+  m_SizeDelta: {x: 267.11, y: 49.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &950280197
 MonoBehaviour:
@@ -3231,7 +3234,9 @@ MonoBehaviour:
   halfHeart: {fileID: 115007028, guid: ec7bd2958eb30394dabb788dbd5cea03, type: 3}
   quarterHeart: {fileID: 2070132250, guid: ec7bd2958eb30394dabb788dbd5cea03, type: 3}
   emptyHeart: {fileID: -2073451633, guid: ec7bd2958eb30394dabb788dbd5cea03, type: 3}
---- !u!114 &950280198
+  heartsPerRow: 6
+  rowPrefab: {fileID: 6903119349286902841, guid: f0c7272806372d040bad79b688f21edf, type: 3}
+--- !u!114 &950280199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3240,7 +3245,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 950280195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -3248,8 +3253,8 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
+  m_ChildAlignment: 3
+  m_Spacing: 2
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -3467,7 +3472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307012768}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 27.666561, y: -25.025635, z: 3.8690097}
+  m_LocalPosition: {x: 27.666561, y: -24.88, z: 3.8690097}
   m_LocalScale: {x: 9.86515, y: 2.598591, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3598,7 +3603,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3682,7 +3687,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4157,7 +4162,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3309b7d2ebaf41fa87c88817dbec1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4178,6 +4183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2084576435}
+  - component: {fileID: 2084576436}
   m_Layer: 5
   m_Name: PotionContainer
   m_TagString: Untagged
@@ -4203,8 +4209,25 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 213.82, y: 38.285}
+  m_SizeDelta: {x: 267.11, y: 27.93}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2084576436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084576434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 658b16251b2498b4bbc7d529c9a7dc8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potionsList: []
+  potionPrefab: {fileID: 6544988392830714989, guid: 934bf65321bada5419b6b00176567ff5, type: 3}
+  playerHealth: {fileID: 306722180}
+  fullPotion: {fileID: -1909938473, guid: 65be8c3c3c46d3a47b0604e71b868d0f, type: 3}
+  emptyPotion: {fileID: 1116319171, guid: 65be8c3c3c46d3a47b0604e71b868d0f, type: 3}
 --- !u!1 &2130653636
 GameObject:
   m_ObjectHideFlags: 0
