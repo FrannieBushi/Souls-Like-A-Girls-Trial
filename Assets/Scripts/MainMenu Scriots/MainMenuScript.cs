@@ -6,23 +6,22 @@ using UnityEngine.EventSystems;
 
 public class MainMenuScript : MonoBehaviour
 {
-    public GameObject firstSelectedButton; // Botón inicial asignado desde el Inspector.
-    public GameObject swordIcon; // Imagen de la espada, asignada desde el Inspector.
+    public GameObject firstSelectedButton; 
+    public GameObject swordIcon; 
 
-    public AudioClip buttonSelectSound; // Sonido al cambiar de botón.
-    public AudioClip buttonClickSound; // Sonido al hacer clic en un botón.
+    public AudioClip buttonSelectSound; 
+    public AudioClip buttonClickSound; 
 
-    private AudioSource effectsAudioSource; // AudioSource exclusivo para los efectos de sonido.
-    private GameObject currentSelectedButton; // Botón actualmente seleccionado.
+    private AudioSource effectsAudioSource; 
+    private GameObject currentSelectedButton; 
 
     void Start()
     {
-        // Crear un AudioSource solo para efectos de sonido, si no existe ya.
         effectsAudioSource = gameObject.AddComponent<AudioSource>();
-        effectsAudioSource.playOnAwake = false; // Asegúrate de que no reproduzca automáticamente.
-        effectsAudioSource.volume = 1.0f; // Ajusta el volumen según sea necesario.
+        effectsAudioSource.playOnAwake = false; 
+        effectsAudioSource.volume = 1.0f; 
 
-        // Seleccionar automáticamente el botón inicial al iniciar el menú.
+        
         EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         currentSelectedButton = firstSelectedButton;
 
@@ -31,26 +30,24 @@ public class MainMenuScript : MonoBehaviour
 
     void Update()
     {
-        // Asegurarse de que siempre haya un botón seleccionado.
+        
         if (EventSystem.current.currentSelectedGameObject == null)
         {
             EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         }
 
-        // Detectar cambio de botón seleccionado.
+        
         if (currentSelectedButton != EventSystem.current.currentSelectedGameObject)
         {
             currentSelectedButton = EventSystem.current.currentSelectedGameObject;
-            PlaySound(buttonSelectSound); // Reproducir sonido al cambiar de botón.
+            PlaySound(buttonSelectSound); 
 
-            // Actualizar posición del icono de espada.
             if (currentSelectedButton != null)
             {
                 UpdateSwordIconPosition(currentSelectedButton.transform.position);
             }
         }
 
-        // Opcional: Detectar teclas rápidas como Escape para salir.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Exit();
@@ -59,22 +56,34 @@ public class MainMenuScript : MonoBehaviour
 
     private void UpdateSwordIconPosition(Vector3 buttonPosition)
     {
-        swordIcon.transform.position = new Vector3(buttonPosition.x + 1.5f, buttonPosition.y, buttonPosition.z);
+        swordIcon.transform.position = new Vector3(buttonPosition.x + 2.7f, buttonPosition.y, buttonPosition.z);
     }
 
     public void NewGame()
     {
-        PlaySound(buttonClickSound); // Reproducir sonido al hacer clic en el botón.
+        PlaySound(buttonClickSound); 
 
-        // Cargar la siguiente escena.
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void FinalBoss()
+    {
+        PlaySound(buttonClickSound); 
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void Credits()
+    {
+        PlaySound(buttonClickSound); 
+
+        SceneManager.LoadScene(2);
     }
 
     public void Exit()
     {
-        PlaySound(buttonClickSound); // Reproducir sonido al hacer clic en el botón.
+        PlaySound(buttonClickSound); 
 
-        // Salir del juego.
         Debug.Log("Leaving...");
         Application.Quit();
     }
@@ -83,7 +92,7 @@ public class MainMenuScript : MonoBehaviour
     {
         if (clip != null && effectsAudioSource != null)
         {
-            effectsAudioSource.PlayOneShot(clip); // Reproduce el sonido por encima de la música de fondo.
+            effectsAudioSource.PlayOneShot(clip); 
         }
     }
 }

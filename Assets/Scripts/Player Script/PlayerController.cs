@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
 
     private bool isHealing;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();    
@@ -27,7 +26,7 @@ public class PlayerController : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
 
