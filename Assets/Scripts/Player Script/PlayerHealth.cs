@@ -41,6 +41,15 @@ public class PlayerHealth : MonoBehaviour
         {
             health = maxHealth;
         }
+
+        // Detener el uso de pociones múltiples si ya se está usando una.
+        if (Input.GetKeyDown(KeyCode.H)) // Puedes ajustar la tecla de uso de poción
+        {
+            if (potions > 0 && health < maxHealth)
+            {
+                UsePotion();
+            }
+        }
     }
 
     public void HealLife(float quantityRestored)

@@ -16,7 +16,8 @@ public class EnemyMovements : MonoBehaviour
     public bool wallDetected, pitDetected, isGround;
     public float detectionRadius;
     public LayerMask whatIsGround;
-
+    
+    private bool hasFlipped = false; // Variable para evitar múltiples giros
 
     void Start()
     {
@@ -28,11 +29,13 @@ public class EnemyMovements : MonoBehaviour
     void Update()
     {
         pitDetected = !Physics2D.OverlapCircle(pitCheck.position, detectionRadius, whatIsGround);
-        wallDetected = !Physics2D.OverlapCircle(wallCheck.position, detectionRadius, whatIsGround);
+        wallDetected = Physics2D.OverlapCircle(wallCheck.position, detectionRadius, whatIsGround);
 
-        if(pitDetected || wallDetected)
+        if ((pitDetected || wallDetected) && !hasFlipped)
         {
             Flip();
+            hasFlipped = true; // Marca que ya giró
+            Invoke("ResetFlip", 0.5f); // Espera 0.5s antes de permitir otro giro
         }
     }
 
@@ -42,25 +45,44 @@ public class EnemyMovements : MonoBehaviour
         {
             anim.SetBool("Idle", true);
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            return;
         }
 
-        if(isWalking)
+        if (isWalking)
         {
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-            if(!walksRight)
-            {
-                rb.velocity = new Vector2(-speed * Time.deltaTime, rb.velocity.y);
-            }
-            else
-            {
-                rb.velocity = new Vector2(speed * Time.deltaTime, rb.velocity.y);    
-            }    
+            float moveDirection = walksRight ? 1f : -1f;
+            rb.velocity = new Vector2(moveDirection * speed, rb.velocity.y);
         }
     }
 
     public void Flip()
     {
+        if (hasFlipped) return;
+
+        Vector3 newScale = transform.localScale;
+        
+        Debug.Log($"Antes de Flip: {newScale}");
+
+        newScale.x *= -1;
+
+        if (float.IsInfinity(newScale.x) || float.IsNaN(newScale.x))
+        {
+            Debug.LogError("Error: Valor inválido en localScale.x antes de asignarlo");
+            return;
+        }
+
+        transform.localScale = newScale;
         walksRight = !walksRight;
-        transform.localScale *= new Vector2(-1, transform.localScale.y);
+
+        hasFlipped = true;
+        Invoke("ResetFlip", 0.5f);
+
+        Debug.Log($"Después de Flip: {transform.localScale}, walksRight: {walksRight}");
+    }
+
+    void ResetFlip()
+    {
+        hasFlipped = false;
     }
 }
