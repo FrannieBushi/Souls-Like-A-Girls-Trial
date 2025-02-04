@@ -17,7 +17,7 @@ public class EnemyMovements : MonoBehaviour
     public float detectionRadius;
     public LayerMask whatIsGround;
     
-    private bool hasFlipped = false; // Variable para evitar múltiples giros
+    private bool hasFlipped = false; 
 
     void Start()
     {
@@ -34,25 +34,23 @@ public class EnemyMovements : MonoBehaviour
         if ((pitDetected || wallDetected) && !hasFlipped)
         {
             Flip();
-            hasFlipped = true; // Marca que ya giró
-            Invoke("ResetFlip", 0.5f); // Espera 0.5s antes de permitir otro giro
+            hasFlipped = true; 
+            Invoke("ResetFlip", 0.5f); 
         }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        if (isStatic)
+        if (isStatic || GetComponent<EnemyHealth>().isStunned)
         {
             anim.SetBool("Idle", true);
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            rb.velocity = Vector2.zero;
             return;
         }
 
         if (isWalking)
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-            float moveDirection = walksRight ? 1f : -1f;
-            rb.velocity = new Vector2(moveDirection * speed, rb.velocity.y);
+            rb.velocity = new Vector2((walksRight ? 1f : -1f) * speed, rb.velocity.y);
         }
     }
 

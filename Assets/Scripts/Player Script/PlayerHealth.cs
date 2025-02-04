@@ -91,6 +91,15 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") && !isInmune)
         {
+            PlayerController player = GetComponent<PlayerController>();
+
+            // Si el jugador está atacando, no recibe daño
+            if (player != null && player.isAttacking)
+            {
+                Debug.Log("El jugador atacó y no recibe daño");
+                return;
+            }
+
             health -= collision.GetComponent<Enemy>().damageGived;
             StartCoroutine(Inmunity());
 
@@ -103,7 +112,7 @@ public class PlayerHealth : MonoBehaviour
                 rb.AddForce(new Vector2(-knockbackForceX, knockbackForceY), ForceMode2D.Force);
             }
 
-            healthChange.Invoke(health); 
+            healthChange.Invoke(health);
 
             if (health <= 0)
             {

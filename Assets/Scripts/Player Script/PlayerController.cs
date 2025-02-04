@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private PlayerHealth playerHealth;
 
     private bool isHealing;
+    public bool isAttacking;
 
     void Start()
     {
@@ -105,8 +106,11 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.J))
         {
+            isAttacking = true;
             anim.SetBool("Attack", true);
             Debug.Log("¡Ataque ejecutado!");
+
+            StartCoroutine(ResetAttackState());
         }
         else
         {
@@ -136,6 +140,12 @@ public class PlayerController : MonoBehaviour
         
         isHealing = false; // Permite movimiento y otras acciones nuevamente
         anim.SetBool("Heal", false); 
+    }
+
+    IEnumerator ResetAttackState()
+    {
+        yield return new WaitForSeconds(0.5f); // Ajusta este tiempo según la animación
+        isAttacking = false;
     }
 
 }
