@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ef0bcb9f011689846ab2cbb0749bb5a6
+guid: c08b57de28d74ff4c8cdfbf295a9bd62
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - ThaleahFat
+  - Baby Cute
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
