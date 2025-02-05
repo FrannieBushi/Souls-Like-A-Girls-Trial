@@ -6,48 +6,73 @@ using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public Toggle fullscreenToggle;
     public Slider volumeSlider;
-    public TMP_Dropdown qualityDropdown;
-    public AudioMixer audioMixer;
+    public float sliderValue;
+    public Image imagenMute;
+
+    public Toggle toggle;
+
+    public TMP_Dropdown dropdown;
+    public int quality;
+
 
     private void Start()
     {
         
-        fullscreenToggle.isOn = Screen.fullScreen;
-        volumeSlider.value = PlayerPrefs.GetFloat("volume", 1f);
-        qualityDropdown.value = PlayerPrefs.GetInt("quality", QualitySettings.GetQualityLevel());
+        volumeSlider.value = PlayerPrefs.GetFloat("volumenAudio", 0.5f);
+        AudioListener.volume = volumeSlider.value;
+        MuteCheck();
 
-        ApplyVolume(volumeSlider.value);
+        if(Screen.fullScreen)
+        {
+            toggle.isOn = true;
+        }
+        else
+        {
+            toggle.isOn = false;
+        }
+
+        quality = PlayerPrefs.GetInt("QualityNumber", 3);
+        dropdown.value = quality;
+        SetQuality();
+   
     }
 
-    public void SetFullScreen(bool isFullscreen)
+    public void ChangeSlider(float valor)
     {
-        Screen.fullScreen = isFullscreen;
-        PlayerPrefs.SetInt("fullscreen", isFullscreen ? 1 : 0);
+        sliderValue = valor;
+        PlayerPrefs.SetFloat("volumenAudio", sliderValue);
+        AudioListener.volume = volumeSlider.value;
+        MuteCheck();
     }
 
-    public void SetVolume(float volume)
+    public void MuteCheck()
     {
-        ApplyVolume(volume);
-        PlayerPrefs.SetFloat("volume", volume);
+        if(sliderValue == 0)
+        {
+            imagenMute.enabled = true;
+        }
+        else
+        {
+            imagenMute.enabled = false;
+        }
     }
 
-    private void ApplyVolume(float volume)
+    public void activateFullScreen(bool fullScreen)
     {
-        audioMixer.SetFloat("Volume", Mathf.Log10(volume) * 20); 
+        Screen.fullScreen = fullScreen;
     }
 
-    public void SetQuality(int qualityIndex)
+    public void SetQuality()
     {
-        QualitySettings.SetQualityLevel(qualityIndex);
-        PlayerPrefs.SetInt("quality", qualityIndex);
-        qualityDropdown.value = qualityIndex; 
+        QualitySettings.SetQualityLevel(dropdown.value);
+        PlayerPrefs.SetInt("QualityNumber", dropdown.value);
+        quality = dropdown.value;
     }
 
     public void GoBackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene("Menu"); 
     }
 }
 
