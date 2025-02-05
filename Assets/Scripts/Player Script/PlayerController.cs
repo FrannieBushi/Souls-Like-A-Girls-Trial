@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;  
 
 public class PlayerController : MonoBehaviour
 {
-
     public float speed, jumpHeight;
     float velX, velY;
     Rigidbody2D rb;
@@ -27,13 +27,16 @@ public class PlayerController : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
     }
 
-    
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoToMainMenu();
+        }
 
         isGrounded = Physics2D.OverlapCircle(groundcheck.position, groundCheckRadius, whatIsGround);
 
-        if(isGrounded)
+        if (isGrounded)
         {
             anim.SetBool("Jump", false);
         }
@@ -68,7 +71,7 @@ public class PlayerController : MonoBehaviour
         velY = rb.velocity.y;
         rb.velocity = new Vector2(velX * speed, velY);
 
-        if(rb.velocity.x != 0)
+        if (rb.velocity.x != 0)
         {
             anim.SetBool("Walk", true);
             FlipCharacter();
@@ -96,15 +99,15 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if(Input.GetButton("Jump") && isGrounded)
+        if (Input.GetButton("Jump") && isGrounded)
         {
-            rb.velocity = new Vector2 (rb.velocity.x, jumpHeight);
+            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         }
     }
 
     public void Attack()
     {
-        if(Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             isAttacking = true;
             anim.SetBool("Attack", true);
@@ -120,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
     public void Heal()
     {
-        if(Input.GetKeyDown(KeyCode.H) && playerHealth.potions > 0 && !isHealing)
+        if (Input.GetKeyDown(KeyCode.H) && playerHealth.potions > 0 && !isHealing)
         {
             isHealing = true;
             anim.SetBool("Heal", true);       
@@ -131,21 +134,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void FinishHeal() // Método llamado desde un Animation Event
+    public void FinishHeal() 
     {
-    
         playerHealth.potions--;
         playerHealth.HealLife(playerHealth.potionsPower);
         Debug.Log("Sanación completada. Pociones restantes: " + playerHealth.potions);
-        
-        isHealing = false; // Permite movimiento y otras acciones nuevamente
+
+        isHealing = false; 
         anim.SetBool("Heal", false); 
     }
 
     IEnumerator ResetAttackState()
     {
-        yield return new WaitForSeconds(0.5f); // Ajusta este tiempo según la animación
+        yield return new WaitForSeconds(0.5f); 
         isAttacking = false;
     }
 
+    private void GoToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");  
+    }
 }

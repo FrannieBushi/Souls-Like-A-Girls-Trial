@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
     public Toggle fullscreenToggle;
     public Slider volumeSlider;
-    public Dropdown qualityDropdown;
+    public TMP_Dropdown qualityDropdown;
     public AudioMixer audioMixer;
 
     private void Start()
@@ -41,6 +42,7 @@ public class OptionsMenu : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("quality", qualityIndex);
+        qualityDropdown.value = qualityIndex; 
     }
 
     public void GoBackToMainMenu()

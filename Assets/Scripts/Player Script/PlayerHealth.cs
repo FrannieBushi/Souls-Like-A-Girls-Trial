@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -40,6 +41,11 @@ public class PlayerHealth : MonoBehaviour
         if (health > maxHealth)
         {
             health = maxHealth;
+        }
+
+        if(health <= 0)
+        {
+            Die();
         }
 
         // Detener el uso de pociones múltiples si ya se está usando una.
@@ -128,6 +134,11 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(inmunityTime);
         sprite.material = material.original;
         isInmune = false;
+    }
+
+    void Die()
+    {
+        SceneManager.LoadScene("DeathScene");  
     }
 }
 
